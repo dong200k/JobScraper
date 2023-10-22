@@ -1,0 +1,5 @@
+/node_modules
+jobs.csv
+/keys
+.env
+privatekey.json
