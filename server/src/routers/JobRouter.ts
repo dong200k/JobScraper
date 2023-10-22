@@ -39,4 +39,10 @@ JobRouter.post(
     JobController.updateJobsMachineRating
 )
 
+JobRouter.post(
+    "/jobs/updateDates",
+    JobController.updateDates
+)
+
+
 export default JobRouter

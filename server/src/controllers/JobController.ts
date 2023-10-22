@@ -114,4 +114,26 @@ export default class JobController{
             res.status(404).send({error})
         }
     }
+
+    static async updateDates(req: any, res: any){
+        try {
+            const db = getFirestore()
+            const batch = db.batch()
+
+            const jobColRef = db.collection("jobs")
+            const querySnapShot = await jobColRef.get()
+
+            const jobs: any[] = []
+            querySnapShot.forEach(job=>{
+                const newDate = Date.parse(job.data().date)
+                batch.update(job.ref, {postedAt: new Date(newDate).getTime()})
+            })
+            await batch.commit()
+
+            res.status(200).send({message: "successfully modifed job dates"})
+        } catch (error) {
+            console.log(error)
+            res.status(404).send({error})
+        }
+    }
 }

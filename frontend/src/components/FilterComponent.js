@@ -60,9 +60,9 @@ export const FilterComponent = ({setJobs, jobs, locations}) => {
     }, [targetHumanRating, jobs])
 
     const [location, setLocation] = useState(undefined)
-    // useEffect(()=>{
-    //     if(location !== undefined) setJobs(jobs.filter(job=>job.location.toLowerCase().startsWith(location)))
-    // }, [location])
+    useEffect(()=>{
+        if(location !== undefined) setJobs(jobs.filter(job=>job.location.toLowerCase().startsWith(location.toLowerCase())))
+    }, [location])
 
     const resetFilters = () => {
         setTargetHumanRating(undefined)
@@ -90,7 +90,7 @@ export const FilterComponent = ({setJobs, jobs, locations}) => {
             </DropdownButton>
                     
             <div className='ml-5'>
-                <CustomBootstrapDropdown/>
+                <CustomBootstrapDropdown locations={locations} setLocation={setLocation} location={location}/>
             </div>
 
             <button className="btn btn-danger ml-5" onClick={resetFilters}>Reset</button>

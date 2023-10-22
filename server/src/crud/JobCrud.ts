@@ -4,7 +4,7 @@ import { getIdFromJob } from "../util"
 export const getJobs = async () => {
     const db = getFirestore()
     const jobColRef = db.collection("jobs")
-    const querySnapShot = await jobColRef.get()
+    const querySnapShot = await jobColRef.limit(100).orderBy('postedAt', 'desc').get()
 
     const jobs: any[] = []
     querySnapShot.forEach(job=>{
@@ -47,15 +47,24 @@ export const addJobs = async (jobs: any)=> {
 
                 // Overwrite if the date of job is more recent
                 if(newDate > oldDate){
-                    await docRef.update(job)
+                    await docRef.update({
+                        ...job,
+                        postedAt: new Date(newDate).getTime()
+                    })
                 }
             }
         }else{
             // Job posting not in database so create it
-            batch.set(docRef, job);
+            const timeNow = Date.now()
+            const newDate = Date.parse(job.date)
+            batch.set(docRef, {
+                ...job,
+                // updatedAt: timeNow,
+                // createdAt: timeNow,
+                postedAt: new Date(newDate).getTime()
+            });
         }
     }
     await batch.commit()
-
 }
 

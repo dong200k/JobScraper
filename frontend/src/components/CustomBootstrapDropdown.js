@@ -52,7 +52,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   return (
     <Dropdown>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-        Location:
+        Location: {location}
       </Dropdown.Toggle>
   
       <Dropdown.Menu as={CustomMenu}>
