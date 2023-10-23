@@ -7,25 +7,28 @@ const JobRouter = express.Router()
 
 JobRouter.get(
     "/jobs", 
+    IsAuthorized,
     JobController.getAllJobs
 )
 
 JobRouter.put(
     "/jobs/:id/rate", 
-    // IsAuthorized,
-    // AuthenticateRole({allowedRoles: ["user"]}),
+    IsAuthorized,
+    AuthenticateRole({allowedRoles: ["editor", "admin"]}),
     JobController.updateJobRating
 )
 
 JobRouter.put(
     "/jobs/:id",
+    // IsAuthorized,
+    // AuthenticateRole({allowedRoles: ["admin"]}),
     JobController.updateJob
 )
 
 JobRouter.delete(
     "/jobs/:id/rate", 
     // IsAuthorized,
-    // AuthenticateRole({allowedRoles: ["user"]}),
+    // AuthenticateRole({allowedRoles: ["admin"]}),
     JobController.deleteJobRating
 )
 

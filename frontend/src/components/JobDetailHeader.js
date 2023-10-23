@@ -1,20 +1,22 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import JobService from '../services/JobService.js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ratings } from '../constants.js';
+import { UserContext } from '../contexts/UserContextProvider.js';
 
 export const JobDetailHeader = ({job})=> {
     const [rating, setRating] = useState(undefined)
+    const {user} = useContext(UserContext)
 
     useEffect(()=>{
         setRating(job.rating)
-        console.log(job)
     }, [job])
 
     const rateJob = (rating) => {
         return () => {
-            JobService.rateJob(job.id, rating)
+            if(user.role !== "admin" && user.role !== "editor") return alert("Unauthorized, must be an approved editor.")
+            JobService.rateJob(job.id, rating, user.idToken)
                 .then(()=>{
                     console.log(`successfully rated job ${job.title} with rating: ${rating}`)
                     job.rating = rating
@@ -27,7 +29,7 @@ export const JobDetailHeader = ({job})=> {
     }
 
     const clearRating = () => {
-        JobService.deleteJobRating(job.id)
+        JobService.deleteJobRating(job.id, user.idToken)
             .then(()=>{
                 console.log(`successfully cleared job ${job.title}'s rating `)
                 setRating(undefined)
@@ -70,7 +72,7 @@ export const JobDetailHeader = ({job})=> {
             </DropdownButton>
             {
                 job.application_link !== "N/A" && 
-                <a className='btn btn-success' href={job.application_link} target="_blank" >Application Link</a>
+                <a className='btn btn-dark' href={job.application_link} target="_blank" >Application Link</a>
             }
             {
                 job.company_job_platform_page !== "N/A" && 

@@ -72,8 +72,8 @@ export const FilterComponent = ({setJobs, jobs, locations}) => {
     }
 
     return (
-        <div className='d-flex' style={{zIndex: 2000}}>
-            <button onClick={()=>setDateDescending(!dateDescending)} className={dateDescending? 'btn btn-dark': 'btn btn-secondary'}>
+        <div className='d-flex mb-5' style={{zIndex: 2000}}>
+            <button onClick={()=>setDateDescending(!dateDescending)} className={dateDescending? 'btn btn-light': 'btn btn-secondary'}>
                 Toggle Date Order: {dateDescending? "Descending": "Ascending"}
             </button>
 

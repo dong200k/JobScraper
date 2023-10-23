@@ -42,9 +42,9 @@ export const MyPagination = ({page, setPage, totalPages})=> {
             {onFirstPage || <Pagination.Prev onClick={decrementPage}/>}
             {items.map(item=>
                 item === page + 1? 
-                    <Pagination.Item active onClick={changePage(item)}>{item}</Pagination.Item>
+                    <Pagination.Item key={item} active onClick={changePage(item)}>{item}</Pagination.Item>
                     :
-                    <Pagination.Item onClick={changePage(item)}>{item}</Pagination.Item>
+                    <Pagination.Item key={item} onClick={changePage(item)}>{item}</Pagination.Item>
             )}
             {showLastPage &&
                 <>

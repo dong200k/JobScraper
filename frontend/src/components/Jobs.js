@@ -42,7 +42,7 @@ export const Jobs = ()=> {
 
                     <div className="col-md-4">
                         {jobs.slice(page*jobsPerPage, page*jobsPerPage + jobsPerPage).map(job=>
-                            <Job onClick={onClickJob(job)} job={job} highlight={job===currentJob}/>
+                            <Job key={job.id} onClick={onClickJob(job)} job={job} highlight={job===currentJob}/>
                         )}
                         <MyPagination setPage={setPage} page={page} totalPages={totalPages}/>
                     </div>
